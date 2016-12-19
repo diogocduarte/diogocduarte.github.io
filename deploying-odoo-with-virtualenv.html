@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Deploying Odoo With&nbsp;Virtualenv | $> diogo --notes-and-thoughts </title>
+
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+<div class="header">
+    <a href="http://diogocduarte.github.io/">$> diogo --notes-and-thoughts</a> <span class="muted"></span>
+</div>
+
+<div class=navigation>
+    <ul>
+            <li><a href="http://diogocduarte.github.io/index.html">Blog</a> </li>
+            <li><a href="http://diogocduarte.github.io/archives.html">Archive</a> </li>
+            <li><a href="http://diogocduarte.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/getting-started.html">Starting Odoo</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/my-profile.html">About</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Deploying Odoo With&nbsp;Virtualenv</h1>
+    <p class=date> Sun, 01 Feb 2015 </p>
+    <p>Using virtualenv for you Odoo deployments and have startup-script running.
+With the base startup script as starting point&nbsp;do:</p>
+<div class="highlight"><pre><span></span><span class="c1">### END INIT INFO</span>
+
+<span class="nv">PATH</span><span class="o">=</span>/bin:/sbin:/usr/bin
+<span class="nv">VIRTENV</span><span class="o">=</span>/opt/odoo/venv/bin/python
+<span class="nv">DAEMON</span><span class="o">=</span>/opt/odoo/odoo/openerp-server
+<span class="nv">NAME</span><span class="o">=</span>odoo-server
+<span class="nv">DESC</span><span class="o">=</span>oodo-server
+
+<span class="c1"># Specify the user name (Default: openerp).</span>
+<span class="nv">USER</span><span class="o">=</span>openerp
+.
+. <span class="o">(</span>in the start session replace start-stop-daemon <span class="nb">command</span> by<span class="o">)</span>
+.
+            start-stop-daemon --start --quiet --pidfile <span class="si">${</span><span class="nv">PIDFILE</span><span class="si">}</span> <span class="se">\</span>
+                    --chuid <span class="si">${</span><span class="nv">USER</span><span class="si">}</span> --background --make-pidfile <span class="se">\</span>
+                    --startas /bin/bash -- -c <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VIRTENV</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">DAEMON</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">DAEMON_OPTS</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://diogocduarte.github.io/tag/odoo-deployment.html">odoo deployment</a>
+      <a href="http://diogocduarte.github.io/tag/virtualenv.html">virtualenv</a>
+    </p>
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Diogo Duarte</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'diogocarvalhoduarte';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/diogocduarte" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+        <a href="https://www.linkedin.com/profile/view?id=37124067" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+        <a href="https://github.com/diogocduarte" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+        <a href="https://plus.google.com/103738689661841005798" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+
+
+        <a href="http://diogocduarte.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59992453-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

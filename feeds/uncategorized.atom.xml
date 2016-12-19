@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>$&gt; diogo --notes-and-thoughts - Uncategorized</title><link href="http://diogocduarte.github.io/" rel="alternate"></link><link href="http://diogocduarte.github.io/feeds/uncategorized.atom.xml" rel="self"></link><id>http://diogocduarte.github.io/</id><updated>2016-12-19T20:00:00+00:00</updated><entry><title>Using LXD remote with ssh port forward</title><link href="http://diogocduarte.github.io/using-lxd-tunnel-ssh.html" rel="alternate"></link><published>2016-12-19T20:00:00+00:00</published><updated>2016-12-19T20:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2016-12-19:/using-lxd-tunnel-ssh.html</id><summary type="html">&lt;p&gt;Well this one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
+one of the great things that came with Ub untu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt;. I follow this project for a while
+and always waiting for the right time to be able to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Well this one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
+one of the great things that came with Ub untu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt;. I follow this project for a while
+and always waiting for the right time to be able to use&amp;nbsp;it.&lt;/p&gt;
+&lt;p&gt;I have been using this for 2 months and i have no complains, so far. It&amp;#8217;s stable as the word says.
+The usual method is to ssh into my test server and there i use lxc to manage my&amp;nbsp;containers.&lt;/p&gt;
+&lt;p&gt;So i just&amp;nbsp;do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Create a SSH tunnel to your laptop&lt;/span&gt;
+ssh user@ip.ad.dr.ress
+
+lxc remote add &lt;span class="nb"&gt;test&lt;/span&gt; 127.0.0.1:9443 &lt;span class="c1"&gt;# (password starts with 1)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Try it out&lt;/span&gt;
+lxc list test:
+lxc &lt;span class="nb"&gt;exec&lt;/span&gt; test:odoo1 bash
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now i recalled that even no being on the same local network i can register the remote &lt;span class="caps"&gt;LXD&lt;/span&gt; daemon
+on the local interface 127.0.0.1 using a different port than the default&amp;nbsp;8443.&lt;/p&gt;
+&lt;p&gt;For this to be possible, we just need to set it up on the &lt;span class="caps"&gt;LXD&lt;/span&gt; server&amp;nbsp;first:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;lxc config &lt;span class="nb"&gt;set&lt;/span&gt; core.https_address &lt;span class="s2"&gt;&amp;quot;[127.0.0.1]:9443&amp;quot;&lt;/span&gt;
+lxc config &lt;span class="nb"&gt;set&lt;/span&gt; core.trust_password some-password
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, we need to add the remote on our&amp;nbsp;laptop:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# You need at least to have lxd-client tools&lt;/span&gt;
+sudo apt install lxd-client
+
+&lt;span class="c1"&gt;# Add the remote LXD server on our laptop&lt;/span&gt;
+lxc remote add &lt;span class="nb"&gt;test&lt;/span&gt; 127.0.0.1:9443
+
+&lt;span class="c1"&gt;# Create a SSH tunnel to your laptop&lt;/span&gt;
+ssh -NL 9443:localhost:9443 user@ip.ad.dr.ress
+
+&lt;span class="c1"&gt;# Try it out&lt;/span&gt;
+lxc list test:
+lxc &lt;span class="nb"&gt;exec&lt;/span&gt; test:odoo1 bash
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now imagine how much easier is to use a lxc file pull/push running lxc on your&amp;nbsp;local&amp;#8230;&lt;/p&gt;
+</content><category term="lxd"></category><category term="lxc"></category><category term="sysadmin"></category></entry><entry><title>Docker Getting Started Commands</title><link href="http://diogocduarte.github.io/getting-started-lxc.html" rel="alternate"></link><published>2015-08-23T10:00:00+01:00</published><updated>2015-08-23T10:00:00+01:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-08-23:/getting-started-lxc.html</id><summary type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; provides the best available option for managing containers, community suported and base for lots of interesting projects out there. Docker used it on the first versions but now they handle directly with&amp;nbsp;libcontainer.&lt;/p&gt;
+&lt;p&gt;After lots of troubles with wrong kernel versions that don&amp;#8217;t support some features like unprivileged …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; provides the best available option for managing containers, community suported and base for lots of interesting projects out there. Docker used it on the first versions but now they handle directly with&amp;nbsp;libcontainer.&lt;/p&gt;
+&lt;p&gt;After lots of troubles with wrong kernel versions that don&amp;#8217;t support some features like unprivileged containers that need &amp;gt;= 3.12 and lxc-attach needs &amp;gt;= 3.8, i have compiled some startup info and&amp;nbsp;commands.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# flush dnsmask cache&lt;/span&gt;
+stop lxc-net
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt;/var/lib/misc/dnsmasq.lxcbr0.leases &lt;span class="c1"&gt;# erase current leases&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="linux"></category><category term="lxc"></category><category term="ubuntu"></category><category term="containers"></category></entry><entry><title>Odoo Custom Mobile Applications</title><link href="http://diogocduarte.github.io/odoo-mobile-applications.html" rel="alternate"></link><published>2015-02-22T10:00:00+00:00</published><updated>2015-02-22T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-02-22:/odoo-mobile-applications.html</id><summary type="html">&lt;p&gt;I think that connecting mobile workers is still missing chapter in Odoo book, when a saw ratchet i had no more doubts on how to solve this problem. Ratchet is a simple javascript framework that realy requires litle javascript coding to make it&amp;nbsp;work.&lt;/p&gt;
+&lt;p&gt;see the &lt;a class="reference external" href="http://goratchet.com"&gt;goratchet.com&lt;/a&gt;&amp;nbsp;website.&lt;/p&gt;
+&lt;p&gt;Thought …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I think that connecting mobile workers is still missing chapter in Odoo book, when a saw ratchet i had no more doubts on how to solve this problem. Ratchet is a simple javascript framework that realy requires litle javascript coding to make it&amp;nbsp;work.&lt;/p&gt;
+&lt;p&gt;see the &lt;a class="reference external" href="http://goratchet.com"&gt;goratchet.com&lt;/a&gt;&amp;nbsp;website.&lt;/p&gt;
+&lt;p&gt;Thought it would be nice to have a timesheet webapp so that i could log time in my contracts using phone. So, i started coding and this was the&amp;nbsp;result:&lt;/p&gt;
+&lt;div class="youtube" align="left"&gt;&lt;iframe width="420" height="315" src="https://www.youtube.com/embed/qJsfZhSFDjw" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;p&gt;Now you can find this particulariy usefull app in Odoo &lt;a class="reference external" href="https://www.odoo.com/apps/modules/8.0/mobile_timesheet/"&gt;App Store&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Later on i thought that are more nice use cases for this and so i had the idea of separating the module and create mobile and&amp;nbsp;mobile_sample.&lt;/p&gt;
+&lt;p&gt;I pushed into github &lt;a class="reference external" href="https://github.com/diogocduarte/odoo-mobile"&gt;https://github.com/diogocduarte/odoo-mobile&lt;/a&gt;, so if you want to join the project just drop me a&amp;nbsp;line.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve been enhancing the base and now it&amp;#8217;s possible to have it&amp;#8217;s own login&amp;nbsp;screen.&lt;/p&gt;
+&lt;img alt="Moblie login screen" src="images/mobile-login.png" /&gt;
+&lt;p&gt;This looks like a real phone application, just need to have an icon link in your mobile home screen. I used this with a hosted instance i have running and it&amp;#8217;s quite fast! Sometimes i even forget it&amp;#8217;s hosted&amp;nbsp;.)&lt;/p&gt;
+&lt;p&gt;If you don&amp;#8217;t know how to, here is a link to&amp;nbsp;follow:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;If you have an IPhone &lt;a class="reference external" href="http://browsers.about.com/od/howtousemobilebrowser1/ss/iphonehomeicons_3.htm#step-heading"&gt;Add to Home Screen in Safari &lt;span class="caps"&gt;IOS&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Or if you are using Android Phones &lt;a class="reference external" href="https://developer.chrome.com/multidevice/android/installtohomescreen"&gt;Add to Home Screen in&amp;nbsp;Chrome&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Next projects are creating a timesheet module that will allow booking time into project tasks. Also done mobile &lt;span class="caps"&gt;CRM&lt;/span&gt; enabling you to bring your leads and opportunities in the&amp;nbsp;pocket.&lt;/p&gt;
+&lt;div class="youtube" align="left"&gt;&lt;iframe width="420" height="315" src="https://www.youtube.com/embed/lHDa_tLo31A" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</content><category term="odoo"></category><category term="mobile"></category><category term="ratchet"></category></entry><entry><title>Deploying Odoo With Virtualenv</title><link href="http://diogocduarte.github.io/deploying-odoo-with-virtualenv.html" rel="alternate"></link><published>2015-02-01T10:00:00+00:00</published><updated>2015-02-01T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-02-01:/deploying-odoo-with-virtualenv.html</id><summary type="html">&lt;p&gt;Using virtualenv for you Odoo deployments and have startup-script running.
+With the base startup script as starting point&amp;nbsp;do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;### END INIT INFO&lt;/span&gt;
+
+&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/bin:/sbin:/usr/bin
+&lt;span class="nv"&gt;VIRTENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/opt/odoo/venv/bin/python
+&lt;span class="nv"&gt;DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/opt/odoo/odoo/openerp-server
+&lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;odoo-server
+&lt;span class="nv"&gt;DESC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;oodo-server
+
+&lt;span class="c1"&gt;# Specify the user name (Default: openerp).&lt;/span&gt;
+&lt;span class="nv"&gt;USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;openerp …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Using virtualenv for you Odoo deployments and have startup-script running.
+With the base startup script as starting point&amp;nbsp;do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;### END INIT INFO&lt;/span&gt;
+
+&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/bin:/sbin:/usr/bin
+&lt;span class="nv"&gt;VIRTENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/opt/odoo/venv/bin/python
+&lt;span class="nv"&gt;DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/opt/odoo/odoo/openerp-server
+&lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;odoo-server
+&lt;span class="nv"&gt;DESC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;oodo-server
+
+&lt;span class="c1"&gt;# Specify the user name (Default: openerp).&lt;/span&gt;
+&lt;span class="nv"&gt;USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;openerp
+.
+. &lt;span class="o"&gt;(&lt;/span&gt;in the start session replace start-stop-daemon &lt;span class="nb"&gt;command&lt;/span&gt; by&lt;span class="o"&gt;)&lt;/span&gt;
+.
+            start-stop-daemon --start --quiet --pidfile &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PIDFILE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+                    --chuid &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;USER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; --background --make-pidfile &lt;span class="se"&gt;\&lt;/span&gt;
+                    --startas /bin/bash -- -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;VIRTENV&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DAEMON&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="odoo deployment"></category><category term="virtualenv"></category></entry><entry><title>Why Should You Use *nix Systems?</title><link href="http://diogocduarte.github.io/why-use-nix-systems.html" rel="alternate"></link><published>2014-11-25T10:00:00+00:00</published><updated>2014-11-25T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2014-11-25:/why-use-nix-systems.html</id><summary type="html">&lt;p&gt;A leading computer security company says it has discovered one of the most sophisticated pieces of malicious software ever seen.
+Symantec says the bug, named Regin, was probably created by a government and has been used for six years against a range of targets around the world.
+Once installed on …&lt;/p&gt;</summary><content type="html">&lt;p&gt;A leading computer security company says it has discovered one of the most sophisticated pieces of malicious software ever seen.
+Symantec says the bug, named Regin, was probably created by a government and has been used for six years against a range of targets around the world.
+Once installed on a computer, it can do things like capture screenshots, steal passwords or recover deleted&amp;nbsp;files.&lt;/p&gt;
+&lt;p&gt;Experts say computers in Russia, Saudi Arabia and Ireland have been hit&amp;nbsp;most.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.symantec.com/connect/blogs/regin-top-tier-espionage-tool-enables-stealthy-surveillance"&gt;http://www.symantec.com/connect/blogs/regin-top-tier-espionage-tool-enables-stealthy-surveillance&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.symantec.com/security_response/writeup.jsp?docid=2013-121221-3645-99"&gt;http://www.symantec.com/security_response/writeup.jsp?docid=2013-121221-3645-99&lt;/a&gt;&lt;/p&gt;
+</content><category term="linux"></category><category term="unix"></category><category term="windows"></category></entry><entry><title>Odoo Subdomain Filtering w/ Exception</title><link href="http://diogocduarte.github.io/odoo-subdomain-filtering-exception.html" rel="alternate"></link><published>2014-11-23T10:00:00+00:00</published><updated>2014-11-23T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2014-11-23:/odoo-subdomain-filtering-exception.html</id><summary type="html">&lt;p&gt;Other day i needed to add a different subdomain for different server.
+All you need to accomplish this is placing this switch in Odoo&amp;nbsp;server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openerp-server -c configfile.conf --db-filter ^%d$
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We will get redirection of subdomain.domain.com to&amp;nbsp;filter=subdomain&lt;/p&gt;
+&lt;p&gt;Now, sometimes we need to publish different servers …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Other day i needed to add a different subdomain for different server.
+All you need to accomplish this is placing this switch in Odoo&amp;nbsp;server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openerp-server -c configfile.conf --db-filter ^%d$
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We will get redirection of subdomain.domain.com to&amp;nbsp;filter=subdomain&lt;/p&gt;
+&lt;p&gt;Now, sometimes we need to publish different servers, because there are different
+versions or just because we want them to have different modules, so we have 2&amp;nbsp;instances:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;8069 -  db-filter&amp;nbsp;^%d$&lt;/li&gt;
+&lt;li&gt;8082 -  db-filter&amp;nbsp;^crmdatabase&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;then we just use nginx with the following configuration&amp;nbsp;file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;server &lt;span class="o"&gt;{&lt;/span&gt;
+    listen        80&lt;span class="p"&gt;;&lt;/span&gt;
+    server_name   localhost.com default_server&lt;span class="p"&gt;;&lt;/span&gt;
+
+    access_log    /var/log/nginx/access.log&lt;span class="p"&gt;;&lt;/span&gt;
+    error_log    /var/log/nginx/error.log&lt;span class="p"&gt;;&lt;/span&gt;
+    proxy_buffers &lt;span class="m"&gt;16&lt;/span&gt; 64k&lt;span class="p"&gt;;&lt;/span&gt;
+    proxy_buffer_size 128k&lt;span class="p"&gt;;&lt;/span&gt;
+    location / &lt;span class="o"&gt;{&lt;/span&gt;
+        proxy_pass    http://0.0.0.0:8069&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header X-Real-IP &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header X-Forward-For &lt;span class="nv"&gt;$proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="c1"&gt;# by default, do not forward anything&lt;/span&gt;
+        proxy_redirect off&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="c1"&gt;# cache some static data in memory for 60mins.&lt;/span&gt;
+    location ~* ^/&lt;span class="o"&gt;(&lt;/span&gt;openerp&lt;span class="p"&gt;|&lt;/span&gt;openobject&lt;span class="p"&gt;|&lt;/span&gt;web&lt;span class="o"&gt;)&lt;/span&gt;/static/ &lt;span class="o"&gt;{&lt;/span&gt;
+        proxy_cache_valid &lt;span class="m"&gt;200&lt;/span&gt; 60m&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_buffering    on&lt;span class="p"&gt;;&lt;/span&gt;
+        expires 864000&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_pass    http://0.0.0.0:8069&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+server &lt;span class="o"&gt;{&lt;/span&gt;
+    listen        80&lt;span class="p"&gt;;&lt;/span&gt;
+    server_name   crmdatabase.localhost.com&lt;span class="p"&gt;;&lt;/span&gt;
+
+    access_log    /var/log/nginx/access.log&lt;span class="p"&gt;;&lt;/span&gt;
+    error_log    /var/log/nginx/error.log&lt;span class="p"&gt;;&lt;/span&gt;
+    proxy_buffers &lt;span class="m"&gt;16&lt;/span&gt; 64k&lt;span class="p"&gt;;&lt;/span&gt;
+    proxy_buffer_size 128k&lt;span class="p"&gt;;&lt;/span&gt;
+    location / &lt;span class="o"&gt;{&lt;/span&gt;
+        proxy_pass    http://0.0.0.0:8282&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header X-Real-IP &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_set_header X-Forward-For &lt;span class="nv"&gt;$proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="c1"&gt;# by default, do not forward anything&lt;/span&gt;
+        proxy_redirect off&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="c1"&gt;# cache some static data in memory for 60mins.&lt;/span&gt;
+    location ~* ^/&lt;span class="o"&gt;(&lt;/span&gt;openerp&lt;span class="p"&gt;|&lt;/span&gt;openobject&lt;span class="p"&gt;|&lt;/span&gt;web&lt;span class="o"&gt;)&lt;/span&gt;/static/ &lt;span class="o"&gt;{&lt;/span&gt;
+        proxy_cache_valid &lt;span class="m"&gt;200&lt;/span&gt; 60m&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_buffering    on&lt;span class="p"&gt;;&lt;/span&gt;
+        expires 864000&lt;span class="p"&gt;;&lt;/span&gt;
+        proxy_pass    http://0.0.0.0:8282&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I use this config often for test servers. Just came up to me that we could also use this having
+2 subdomains like *.v7.odoo.example.com and&amp;nbsp;*.v8.odoo.example.com.&lt;/p&gt;
+</content><category term="odoo"></category><category term="python"></category><category term="deployment"></category><category term="nginx"></category></entry><entry><title>Docker Getting Started Commands</title><link href="http://diogocduarte.github.io/docker-basic-commands.html" rel="alternate"></link><published>2014-11-16T10:00:00+00:00</published><updated>2014-11-16T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2014-11-16:/docker-basic-commands.html</id><summary type="html">&lt;p&gt;The moment i learned about the docker way of managing containerized applications i was immediately interested in knowing more about it. Just makes much more sense in managing the available machine resources. For now i will just show how to get it&amp;nbsp;running:&lt;/p&gt;
+&lt;p&gt;Install latest from &lt;a class="reference external" href="https://docs.docker.com/installation/"&gt;Docker&amp;nbsp;Installation&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# run as …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;The moment i learned about the docker way of managing containerized applications i was immediately interested in knowing more about it. Just makes much more sense in managing the available machine resources. For now i will just show how to get it&amp;nbsp;running:&lt;/p&gt;
+&lt;p&gt;Install latest from &lt;a class="reference external" href="https://docs.docker.com/installation/"&gt;Docker&amp;nbsp;Installation&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# run as root&lt;/span&gt;
+sudo su
+
+&lt;span class="c1"&gt;# download debian:testing and run new container&lt;/span&gt;
+docker run -t -i --net bridge debian:testing /bin/bash
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Using docker&amp;#8217;s &lt;span class="caps"&gt;RUN&lt;/span&gt; command, we will begin with creating a new container based on the Ubuntu image. We are going to attach a terminal to it using the “-t”&amp;nbsp;flag.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# here we start container and redirect port 80&lt;/span&gt;
+sudo docker run -i -t -p 80:80 ubuntu /bin/bash
+
+&lt;span class="c1"&gt;# checkout the list of running containers&lt;/span&gt;
+docker ps
+
+&lt;span class="c1"&gt;# or for all container, running and stoped&lt;/span&gt;
+docker ps -a
+
+&lt;span class="c1"&gt;# run a stoped container&lt;/span&gt;
+docker start -a &amp;lt;container_id/container_alias&amp;gt;
+
+&lt;span class="c1"&gt;# from 1.3 you can enter a running container&lt;/span&gt;
+docker &lt;span class="nb"&gt;exec&lt;/span&gt; -i -t &amp;lt;container_id/container_alias&amp;gt; /bin/bash
+
+&lt;span class="c1"&gt;# logout using CTRL-D and container will continue to run&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Networking, docker has several modes but the default internal bridge give ip addresses in 172.17.0.1 net.
+Just do inside the container: &lt;cite&gt;ip addr&lt;/cite&gt; and you will see&amp;nbsp;it.&lt;/p&gt;
+</content><category term="linux"></category><category term="docker"></category><category term="ubuntu"></category></entry><entry><title>Linux Mint Crashed X-Server after login</title><link href="http://diogocduarte.github.io/mint-crash-xserver.html" rel="alternate"></link><published>2014-10-29T10:00:00+00:00</published><updated>2014-10-29T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2014-10-29:/mint-crash-xserver.html</id><summary type="html">&lt;p&gt;The other day, out of the blue, i got a problem that in the past already made me format the operating system. While logging in the user screen then i just saw the mouse pointer moving an empty blackness. This time i swore to solve the problem diving into the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The other day, out of the blue, i got a problem that in the past already made me format the operating system. While logging in the user screen then i just saw the mouse pointer moving an empty blackness. This time i swore to solve the problem diving into the internet searching for&amp;nbsp;answers.&lt;/p&gt;
+&lt;p&gt;Tried lots of things and the one the really worked was&amp;nbsp;:&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;CTRL&lt;/span&gt;-&lt;span class="caps"&gt;ALT&lt;/span&gt; F2 then login and do &lt;cite&gt;sudo apt-get install &amp;#8212;upgrade mint-meta-cinnamon&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install --upgrade mint-meta-cinnamon
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;the middle of the logged messages i saw python imaging being installed. This clicked my mind and i recalled that latter in the day i had some issues with &lt;span class="caps"&gt;PIL&lt;/span&gt; and that made me remove from system while installing Pillow. So, even if i use virtualenv, sometimes i just do some changes using apt. Next time i will remember that linux desktop systems are mostly implemented in&amp;nbsp;Python&amp;#8230;&lt;/p&gt;
+</content><category term="linux"></category><category term="mint"></category><category term="ubuntu"></category></entry><entry><title>Odoo Subdomain Database Filtering</title><link href="http://diogocduarte.github.io/odoo-subdomain-filtering.html" rel="alternate"></link><published>2014-10-29T10:00:00+00:00</published><updated>2014-10-29T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2014-10-29:/odoo-subdomain-filtering.html</id><summary type="html">&lt;p&gt;After searching a lot i found that this is really possible to achieve, and it&amp;#8217;s quite simple indeed just place this switch in&amp;nbsp;server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openerp-server -c configfile.conf --db-filter ^%d$
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that this &lt;em&gt;will not work&lt;/em&gt; if you place it in the configuration&amp;nbsp;file.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After searching a lot i found that this is really possible to achieve, and it&amp;#8217;s quite simple indeed just place this switch in&amp;nbsp;server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openerp-server -c configfile.conf --db-filter ^%d$
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that this &lt;em&gt;will not work&lt;/em&gt; if you place it in the configuration&amp;nbsp;file.&lt;/p&gt;
+</content><category term="odoo"></category><category term="python"></category><category term="deployment"></category></entry></feed>

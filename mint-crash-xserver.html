@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Linux Mint Crashed X-Server after&nbsp;login | $> diogo --notes-and-thoughts </title>
+
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+<div class="header">
+    <a href="http://diogocduarte.github.io/">$> diogo --notes-and-thoughts</a> <span class="muted"></span>
+</div>
+
+<div class=navigation>
+    <ul>
+            <li><a href="http://diogocduarte.github.io/index.html">Blog</a> </li>
+            <li><a href="http://diogocduarte.github.io/archives.html">Archive</a> </li>
+            <li><a href="http://diogocduarte.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/getting-started.html">Starting Odoo</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/my-profile.html">About</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Linux Mint Crashed X-Server after&nbsp;login</h1>
+    <p class=date> Wed, 29 Oct 2014 </p>
+    <p>The other day, out of the blue, i got a problem that in the past already made me format the operating system. While logging in the user screen then i just saw the mouse pointer moving an empty blackness. This time i swore to solve the problem diving into the internet searching for&nbsp;answers.</p>
+<p>Tried lots of things and the one the really worked was&nbsp;:</p>
+<p><span class="caps">CTRL</span>-<span class="caps">ALT</span> F2 then login and do <cite>sudo apt-get install &#8212;upgrade mint-meta-cinnamon</cite></p>
+<div class="highlight"><pre><span></span>sudo apt-get install --upgrade mint-meta-cinnamon
+</pre></div>
+<p>the middle of the logged messages i saw python imaging being installed. This clicked my mind and i recalled that latter in the day i had some issues with <span class="caps">PIL</span> and that made me remove from system while installing Pillow. So, even if i use virtualenv, sometimes i just do some changes using apt. Next time i will remember that linux desktop systems are mostly implemented in&nbsp;Python&#8230;</p>
+
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://diogocduarte.github.io/tag/linux.html">linux</a>
+      <a href="http://diogocduarte.github.io/tag/mint.html">mint</a>
+      <a href="http://diogocduarte.github.io/tag/ubuntu.html">ubuntu</a>
+    </p>
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Diogo Duarte</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'diogocarvalhoduarte';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/diogocduarte" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+        <a href="https://www.linkedin.com/profile/view?id=37124067" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+        <a href="https://github.com/diogocduarte" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+        <a href="https://plus.google.com/103738689661841005798" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+
+
+        <a href="http://diogocduarte.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59992453-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

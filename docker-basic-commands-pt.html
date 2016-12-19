@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Docker Comandos&nbsp;Basicos | $> diogo --notes-and-thoughts </title>
+
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+<div class="header">
+    <a href="http://diogocduarte.github.io/">$> diogo --notes-and-thoughts</a> <span class="muted"></span>
+</div>
+
+<div class=navigation>
+    <ul>
+            <li><a href="http://diogocduarte.github.io/index.html">Blog</a> </li>
+            <li><a href="http://diogocduarte.github.io/archives.html">Archive</a> </li>
+            <li><a href="http://diogocduarte.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/getting-started.html">Starting Odoo</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/my-profile.html">About</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Docker Comandos&nbsp;Basicos</h1>
+    <p class=date> 2014-11-16(Sun) </p>
+    <p>Assim que soube da existência do Docker e a forma que introduz no manuseamento de contentores virtuais achei lógico e quis aprender mais. Como o tempo não abunda, o sistema de aprendizagem que melhor me serve é usando exemplos e tentar aplicar em casos práticos do meu dia a dia. Por agora irei só mostrar os comandops básicos para simplesment substituir a&nbsp;VirtualBox:</p>
+<p>Instalar a última versão em  <a class="reference external" href="https://docs.docker.com/installation/">Docker&nbsp;Installation</a></p>
+<div class="highlight"><pre><span></span><span class="c1"># run as root</span>
+sudo su
+
+<span class="c1"># download debian:testing and run new container</span>
+docker run -t -i --net bridge debian:testing /bin/bash
+</pre></div>
+<p>O command <span class="caps">RUN</span> permite criar um contentor baseado numa imagem Ubuntu. Vamos associar o terminal usando o parametro&nbsp;-t.</p>
+<div class="highlight"><pre><span></span><span class="c1"># here we start container and redirect port 80</span>
+sudo docker run -i -t -p 80:80 ubuntu /bin/bash
+
+<span class="c1"># checkout the list of running containers</span>
+docker ps
+
+<span class="c1"># or for all container, running and stoped</span>
+docker ps -a
+
+<span class="c1"># run a stoped container</span>
+docker start -a &lt;container_id/container_alias&gt;
+
+<span class="c1"># from 1.3 you can enter a running container</span>
+docker <span class="nb">exec</span> -i -t &lt;container_id/container_alias&gt; /bin/bash
+
+<span class="c1"># logout using CTRL-D and container will continue to run</span>
+</pre></div>
+<p>As interfaces de rede, por defeito são criadas em modo de bridge, atribuido endereços ip na gama 172.17.0.1. Basta entrar no contentor e fazer : <cite>ip addr</cite></p>
+
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://diogocduarte.github.io/tag/linux.html">linux</a>
+      <a href="http://diogocduarte.github.io/tag/docker.html">docker</a>
+      <a href="http://diogocduarte.github.io/tag/ubuntu.html">ubuntu</a>
+    </p>
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Diogo Duarte</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'diogocarvalhoduarte';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/diogocduarte" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+        <a href="https://www.linkedin.com/profile/view?id=37124067" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+        <a href="https://github.com/diogocduarte" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+        <a href="https://plus.google.com/103738689661841005798" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+
+
+        <a href="http://diogocduarte.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59992453-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

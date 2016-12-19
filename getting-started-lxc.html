@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Docker Getting Started&nbsp;Commands | $> diogo --notes-and-thoughts </title>
+
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+<div class="header">
+    <a href="http://diogocduarte.github.io/">$> diogo --notes-and-thoughts</a> <span class="muted"></span>
+</div>
+
+<div class=navigation>
+    <ul>
+            <li><a href="http://diogocduarte.github.io/index.html">Blog</a> </li>
+            <li><a href="http://diogocduarte.github.io/archives.html">Archive</a> </li>
+            <li><a href="http://diogocduarte.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/getting-started.html">Starting Odoo</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/my-profile.html">About</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Docker Getting Started&nbsp;Commands</h1>
+    <p class=date> Sun, 23 Aug 2015 </p>
+    <p><span class="caps">LXC</span> provides the best available option for managing containers, community suported and base for lots of interesting projects out there. Docker used it on the first versions but now they handle directly with&nbsp;libcontainer.</p>
+<p>After lots of troubles with wrong kernel versions that don&#8217;t support some features like unprivileged containers that need &gt;= 3.12 and lxc-attach needs &gt;= 3.8, i have compiled some startup info and&nbsp;commands.</p>
+<div class="highlight"><pre><span></span><span class="c1"># flush dnsmask cache</span>
+stop lxc-net
+<span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt;/var/lib/misc/dnsmasq.lxcbr0.leases <span class="c1"># erase current leases</span>
+</pre></div>
+
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://diogocduarte.github.io/tag/linux.html">linux</a>
+      <a href="http://diogocduarte.github.io/tag/lxc.html">lxc</a>
+      <a href="http://diogocduarte.github.io/tag/ubuntu.html">ubuntu</a>
+      <a href="http://diogocduarte.github.io/tag/containers.html">containers</a>
+    </p>
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Diogo Duarte</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'diogocarvalhoduarte';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/diogocduarte" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+        <a href="https://www.linkedin.com/profile/view?id=37124067" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+        <a href="https://github.com/diogocduarte" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+        <a href="https://plus.google.com/103738689661841005798" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+
+
+        <a href="http://diogocduarte.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59992453-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
