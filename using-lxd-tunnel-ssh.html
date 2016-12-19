@@ -29,7 +29,7 @@
         <div class=body>
     <h1 class="title"> Using <span class="caps">LXD</span> remote with ssh port&nbsp;forward</h1>
     <p class=date> Mon, 19 Dec 2016 </p>
-    <p>Well this one came to me, while using <span class="caps">LXD</span> on a test server i have. <span class="caps">LXD</span> 2.0 stable is
+    <p>This one came to me, while using <span class="caps">LXD</span> on a test server i have. <span class="caps">LXD</span> 2.0 stable is
 one of the great things that came with Ub untu 16.<span class="caps">04LTS</span>. I follow this project for a while
 and always waiting for the right time to be able to use&nbsp;it.</p>
 <p>I have been using this for 2 months and i have no complains, so far. It&#8217;s stable as the word says.
@@ -38,11 +38,10 @@ The usual method is to ssh into my test server and there i use lxc to manage my&
 <div class="highlight"><pre><span></span><span class="c1"># Create a SSH tunnel to your laptop</span>
 ssh user@ip.ad.dr.ress
 
-lxc remote add <span class="nb">test</span> 127.0.0.1:9443 <span class="c1"># (password starts with 1)</span>
-
-<span class="c1"># Try it out</span>
-lxc list test:
-lxc <span class="nb">exec</span> test:odoo1 bash
+<span class="c1"># Use it</span>
+lxc list
+lxc <span class="nb">exec</span> odoo1 bash
+<span class="o">(</span>many other available lxc commands ...<span class="o">)</span>
 </pre></div>
 <p>Now i recalled that even no being on the same local network i can register the remote <span class="caps">LXD</span> daemon
 on the local interface 127.0.0.1 using a different port than the default&nbsp;8443.</p>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>$&gt; diogo --notes-and-thoughts</title><link href="http://diogocduarte.github.io/" rel="alternate"></link><link href="http://diogocduarte.github.io/feeds/all.atom.xml" rel="self"></link><id>http://diogocduarte.github.io/</id><updated>2016-12-19T20:00:00+00:00</updated><entry><title>Using LXD remote with ssh port forward</title><link href="http://diogocduarte.github.io/using-lxd-tunnel-ssh.html" rel="alternate"></link><published>2016-12-19T20:00:00+00:00</published><updated>2016-12-19T20:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2016-12-19:/using-lxd-tunnel-ssh.html</id><summary type="html">&lt;p&gt;Well this one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
+<feed xmlns="http://www.w3.org/2005/Atom"><title>$&gt; diogo --notes-and-thoughts</title><link href="http://diogocduarte.github.io/" rel="alternate"></link><link href="http://diogocduarte.github.io/feeds/all.atom.xml" rel="self"></link><id>http://diogocduarte.github.io/</id><updated>2016-12-19T20:00:00+00:00</updated><entry><title>Using LXD remote with ssh port forward</title><link href="http://diogocduarte.github.io/using-lxd-tunnel-ssh.html" rel="alternate"></link><published>2016-12-19T20:00:00+00:00</published><updated>2016-12-19T20:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2016-12-19:/using-lxd-tunnel-ssh.html</id><summary type="html">&lt;p&gt;This one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
 one of the great things that came with Ub untu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt;. I follow this project for a while
-and always waiting for the right time to be able to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Well this one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
+and always waiting for the right time to be able to use …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This one came to me, while using &lt;span class="caps"&gt;LXD&lt;/span&gt; on a test server i have. &lt;span class="caps"&gt;LXD&lt;/span&gt; 2.0 stable is
 one of the great things that came with Ub untu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt;. I follow this project for a while
 and always waiting for the right time to be able to use&amp;nbsp;it.&lt;/p&gt;
 &lt;p&gt;I have been using this for 2 months and i have no complains, so far. It&amp;#8217;s stable as the word says.
@@ -10,11 +10,10 @@ The usual method is to ssh into my test server and there i use lxc to manage my&
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Create a SSH tunnel to your laptop&lt;/span&gt;
 ssh user@ip.ad.dr.ress
 
-lxc remote add &lt;span class="nb"&gt;test&lt;/span&gt; 127.0.0.1:9443 &lt;span class="c1"&gt;# (password starts with 1)&lt;/span&gt;
-
-&lt;span class="c1"&gt;# Try it out&lt;/span&gt;
-lxc list test:
-lxc &lt;span class="nb"&gt;exec&lt;/span&gt; test:odoo1 bash
+&lt;span class="c1"&gt;# Use it&lt;/span&gt;
+lxc list
+lxc &lt;span class="nb"&gt;exec&lt;/span&gt; odoo1 bash
+&lt;span class="o"&gt;(&lt;/span&gt;many other available lxc commands ...&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now i recalled that even no being on the same local network i can register the remote &lt;span class="caps"&gt;LXD&lt;/span&gt; daemon
 on the local interface 127.0.0.1 using a different port than the default&amp;nbsp;8443.&lt;/p&gt;
