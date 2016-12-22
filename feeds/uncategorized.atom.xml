@@ -36,14 +36,57 @@ lxc list test:
 lxc &lt;span class="nb"&gt;exec&lt;/span&gt; test:odoo1 bash
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now imagine how much easier is to use a lxc file pull/push running lxc on your&amp;nbsp;local&amp;#8230;&lt;/p&gt;
-</content><category term="lxd"></category><category term="lxc"></category><category term="sysadmin"></category></entry><entry><title>Docker Getting Started Commands</title><link href="http://diogocduarte.github.io/getting-started-lxc.html" rel="alternate"></link><published>2015-08-23T10:00:00+01:00</published><updated>2015-08-23T10:00:00+01:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-08-23:/getting-started-lxc.html</id><summary type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; provides the best available option for managing containers, community suported and base for lots of interesting projects out there. Docker used it on the first versions but now they handle directly with&amp;nbsp;libcontainer.&lt;/p&gt;
-&lt;p&gt;After lots of troubles with wrong kernel versions that don&amp;#8217;t support some features like unprivileged …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; provides the best available option for managing containers, community suported and base for lots of interesting projects out there. Docker used it on the first versions but now they handle directly with&amp;nbsp;libcontainer.&lt;/p&gt;
-&lt;p&gt;After lots of troubles with wrong kernel versions that don&amp;#8217;t support some features like unprivileged containers that need &amp;gt;= 3.12 and lxc-attach needs &amp;gt;= 3.8, i have compiled some startup info and&amp;nbsp;commands.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# flush dnsmask cache&lt;/span&gt;
-stop lxc-net
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt;/var/lib/misc/dnsmasq.lxcbr0.leases &lt;span class="c1"&gt;# erase current leases&lt;/span&gt;
+</content><category term="lxd"></category><category term="lxc"></category><category term="sysadmin"></category></entry><entry><title>LXD Getting Started Commands</title><link href="http://diogocduarte.github.io/getting-started-lxc-lxd.html" rel="alternate"></link><published>2016-09-23T10:00:00+01:00</published><updated>2016-09-23T10:00:00+01:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2016-09-23:/getting-started-lxc-lxd.html</id><summary type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; 2.0 released with Ubuntu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt; provides stable &lt;span class="caps"&gt;LXC&lt;/span&gt; containers, managed
+by a daemon service called &lt;span class="caps"&gt;LXD&lt;/span&gt;. But pay attention, this is not Docker, the concept
+is quite&amp;nbsp;different.&lt;/p&gt;
+&lt;p&gt;In simple words, Docker is ephemeral like when you start a service. Or you can call
+that a way …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; 2.0 released with Ubuntu 16.&lt;span class="caps"&gt;04LTS&lt;/span&gt; provides stable &lt;span class="caps"&gt;LXC&lt;/span&gt; containers, managed
+by a daemon service called &lt;span class="caps"&gt;LXD&lt;/span&gt;. But pay attention, this is not Docker, the concept
+is quite&amp;nbsp;different.&lt;/p&gt;
+&lt;p&gt;In simple words, Docker is ephemeral like when you start a service. Or you can call
+that a way of packaging some service / server / application inside of a container
+that has all different libs, written in different languages. Who cares, its inside
+its own operation&amp;nbsp;system.&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;LXC&lt;/span&gt; / &lt;span class="caps"&gt;LXD&lt;/span&gt; its more like any other virtualization technology, like &lt;span class="caps"&gt;KVM&lt;/span&gt; or VMWare.
+Just that you can have 10x the density (at least Canonical clames it). This is
+quite handy because its also 10x simpler to&amp;nbsp;manage.&lt;/p&gt;
+&lt;p&gt;Applying Docker to Odoo deployment, i Maybe i would use it with some mechanism of
+spanning multiple machines under the same load balancer. This would allow maybe to
+serve more users in peek times. Of course that would mean that this would be a very
+big deployment and that the effort to orchestrate this would be less than the price
+of keeping the same machine always on waiting for the requests to&amp;nbsp;come.&lt;/p&gt;
+&lt;p&gt;Bottom line, we would need a team to manage this possible Docker deployment. Now &lt;span class="caps"&gt;LXD&lt;/span&gt;/&lt;span class="caps"&gt;LXD&lt;/span&gt;
+provides container start , stop, copy, move (to different hosts), snapshot, image publishing.
+Mostly same, just it is a continuity concept. Container is seen like a server and not
+like a service, we can attach storage or use zfs to mirror data. In my perspective using
+Docker with Odoo for small and medium projects is a mistake, &lt;span class="caps"&gt;LXC&lt;/span&gt; and &lt;span class="caps"&gt;LXD&lt;/span&gt; is a better choice.
+Here are some commands to get you&amp;nbsp;started.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Take a snapshot&lt;/span&gt;
+lxc snapshot c1 YYYY-MM-DD
+
+&lt;span class="c1"&gt;# Restore snapshot&lt;/span&gt;
+lxc snapshot c1 YYYY-MM-DD
+
+&lt;span class="c1"&gt;# Create new container from snapshop&lt;/span&gt;
+lxc copy u1/YYYY-MM-DD testcontainer
+
+&lt;span class="c1"&gt;# Publish new image&lt;/span&gt;
+lxc publish u1/YYYY-MM-DD --alias foo-2.0
+
+&lt;span class="c1"&gt;# Edit image&lt;/span&gt;
+lxc image edit foo-2.0
+
+&lt;span class="c1"&gt;# Export and import compressed&lt;/span&gt;
+lxc image &lt;span class="nb"&gt;export&lt;/span&gt; foo-2.0 foo-2.0.tar.gz
+lxc image import foo-2.0.tar.gz --alias foo-2.0 --public
+
+&lt;span class="c1"&gt;# Push file into container&lt;/span&gt;
+lxc file push ~/db/dbdump.backup test:c1/root/file.backup
+
+&lt;span class="c1"&gt;# pipe a folder into container&lt;/span&gt;
+tar cf - ~/.local/shar/Odoo/filestore/v10_database &lt;span class="p"&gt;|&lt;/span&gt; lxc &lt;span class="nb"&gt;exec&lt;/span&gt; host01:c1 -- tar xvf - -C /opt/odoo/data/filestore/v10_database
 &lt;/pre&gt;&lt;/div&gt;
-</content><category term="linux"></category><category term="lxc"></category><category term="ubuntu"></category><category term="containers"></category></entry><entry><title>Odoo Custom Mobile Applications</title><link href="http://diogocduarte.github.io/odoo-mobile-applications.html" rel="alternate"></link><published>2015-02-22T10:00:00+00:00</published><updated>2015-02-22T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-02-22:/odoo-mobile-applications.html</id><summary type="html">&lt;p&gt;I think that connecting mobile workers is still missing chapter in Odoo book, when a saw ratchet i had no more doubts on how to solve this problem. Ratchet is a simple javascript framework that realy requires litle javascript coding to make it&amp;nbsp;work.&lt;/p&gt;
+</content><category term="linux"></category><category term="lxc"></category><category term="lxd"></category><category term="ubuntu"></category><category term="containers"></category></entry><entry><title>Odoo Custom Mobile Applications</title><link href="http://diogocduarte.github.io/odoo-mobile-applications.html" rel="alternate"></link><published>2015-02-22T10:00:00+00:00</published><updated>2015-02-22T10:00:00+00:00</updated><author><name>Diogo Duarte</name></author><id>tag:diogocduarte.github.io,2015-02-22:/odoo-mobile-applications.html</id><summary type="html">&lt;p&gt;I think that connecting mobile workers is still missing chapter in Odoo book, when a saw ratchet i had no more doubts on how to solve this problem. Ratchet is a simple javascript framework that realy requires litle javascript coding to make it&amp;nbsp;work.&lt;/p&gt;
 &lt;p&gt;see the &lt;a class="reference external" href="http://goratchet.com"&gt;goratchet.com&lt;/a&gt;&amp;nbsp;website.&lt;/p&gt;
 &lt;p&gt;Thought …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I think that connecting mobile workers is still missing chapter in Odoo book, when a saw ratchet i had no more doubts on how to solve this problem. Ratchet is a simple javascript framework that realy requires litle javascript coding to make it&amp;nbsp;work.&lt;/p&gt;
 &lt;p&gt;see the &lt;a class="reference external" href="http://goratchet.com"&gt;goratchet.com&lt;/a&gt;&amp;nbsp;website.&lt;/p&gt;

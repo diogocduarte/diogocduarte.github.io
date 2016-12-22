@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> <span class="caps">LXD</span> Getting Started&nbsp;Commands | $> diogo --notes-and-thoughts </title>
+
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://diogocduarte.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+<div class="header">
+    <a href="http://diogocduarte.github.io/">$> diogo --notes-and-thoughts</a> <span class="muted"></span>
+</div>
+
+<div class=navigation>
+    <ul>
+            <li><a href="http://diogocduarte.github.io/index.html">Blog</a> </li>
+            <li><a href="http://diogocduarte.github.io/archives.html">Archive</a> </li>
+            <li><a href="http://diogocduarte.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/getting-started.html">Starting Odoo</a> </li>
+            <li><a href="http://diogocduarte.github.io/pages/my-profile.html">About</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> <span class="caps">LXD</span> Getting Started&nbsp;Commands</h1>
+    <p class=date> Fri, 23 Sep 2016 </p>
+    <p><span class="caps">LXC</span> 2.0 released with Ubuntu 16.<span class="caps">04LTS</span> provides stable <span class="caps">LXC</span> containers, managed
+by a daemon service called <span class="caps">LXD</span>. But pay attention, this is not Docker, the concept
+is quite&nbsp;different.</p>
+<p>In simple words, Docker is ephemeral like when you start a service. Or you can call
+that a way of packaging some service / server / application inside of a container
+that has all different libs, written in different languages. Who cares, its inside
+its own operation&nbsp;system.</p>
+<p><span class="caps">LXC</span> / <span class="caps">LXD</span> its more like any other virtualization technology, like <span class="caps">KVM</span> or VMWare.
+Just that you can have 10x the density (at least Canonical clames it). This is
+quite handy because its also 10x simpler to&nbsp;manage.</p>
+<p>Applying Docker to Odoo deployment, i Maybe i would use it with some mechanism of
+spanning multiple machines under the same load balancer. This would allow maybe to
+serve more users in peek times. Of course that would mean that this would be a very
+big deployment and that the effort to orchestrate this would be less than the price
+of keeping the same machine always on waiting for the requests to&nbsp;come.</p>
+<p>Bottom line, we would need a team to manage this possible Docker deployment. Now <span class="caps">LXD</span>/<span class="caps">LXD</span>
+provides container start , stop, copy, move (to different hosts), snapshot, image publishing.
+Mostly same, just it is a continuity concept. Container is seen like a server and not
+like a service, we can attach storage or use zfs to mirror data. In my perspective using
+Docker with Odoo for small and medium projects is a mistake, <span class="caps">LXC</span> and <span class="caps">LXD</span> is a better choice.
+Here are some commands to get you&nbsp;started.</p>
+<div class="highlight"><pre><span></span><span class="c1"># Take a snapshot</span>
+lxc snapshot c1 YYYY-MM-DD
+
+<span class="c1"># Restore snapshot</span>
+lxc snapshot c1 YYYY-MM-DD
+
+<span class="c1"># Create new container from snapshop</span>
+lxc copy u1/YYYY-MM-DD testcontainer
+
+<span class="c1"># Publish new image</span>
+lxc publish u1/YYYY-MM-DD --alias foo-2.0
+
+<span class="c1"># Edit image</span>
+lxc image edit foo-2.0
+
+<span class="c1"># Export and import compressed</span>
+lxc image <span class="nb">export</span> foo-2.0 foo-2.0.tar.gz
+lxc image import foo-2.0.tar.gz --alias foo-2.0 --public
+
+<span class="c1"># Push file into container</span>
+lxc file push ~/db/dbdump.backup test:c1/root/file.backup
+
+<span class="c1"># pipe a folder into container</span>
+tar cf - ~/.local/shar/Odoo/filestore/v10_database <span class="p">|</span> lxc <span class="nb">exec</span> host01:c1 -- tar xvf - -C /opt/odoo/data/filestore/v10_database
+</pre></div>
+
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://diogocduarte.github.io/tag/linux.html">linux</a>
+      <a href="http://diogocduarte.github.io/tag/lxc.html">lxc</a>
+      <a href="http://diogocduarte.github.io/tag/lxd.html">lxd</a>
+      <a href="http://diogocduarte.github.io/tag/ubuntu.html">ubuntu</a>
+      <a href="http://diogocduarte.github.io/tag/containers.html">containers</a>
+    </p>
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Diogo Duarte</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'diogocarvalhoduarte';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/diogocduarte" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+        <a href="https://www.linkedin.com/profile/view?id=37124067" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+        <a href="https://github.com/diogocduarte" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+        <a href="https://plus.google.com/103738689661841005798" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+
+
+        <a href="http://diogocduarte.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59992453-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
